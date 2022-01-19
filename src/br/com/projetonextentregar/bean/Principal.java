@@ -28,7 +28,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		while(true) {
-			System.out.println("Escolha a opção desejada\n1-cadastrar dados\n2-Tranferir\n3-Depósito\n4-consultar saldo\n5-Cadastrar pix");
+			System.out.println("Escolha a opção desejada\n1-cadastrar dados\n2-Tranferir\n3-Depositar\n4- Consultar saldo\n5-PIX");
 			escolha = sc.nextInt();
 			 sc.nextLine();
 			 if(escolha == 1) {//cadastra
@@ -65,11 +65,12 @@ public class Principal {
 		System.out.print("Escolha a opção: ");					
 		String op = sc.nextLine();
 		if (op.equals("1")) {//cadastra chave pix
-			System.out.println("Escolha o tipo de chave ");
+			
 			 
 			 System.out.println("1- Aleatória\n 2-CPF\n 3-telefone \n 4-e-mail ");
 				 
-			Pix pix = new Pix();				 
+			Pix pix = new Pix();
+			System.out.print("Escolha o tipo de chave: ");
 			 int opcaoPix = sc.nextInt();
 				sc.nextLine();
 			 
@@ -78,6 +79,7 @@ public class Principal {
 					String conteudoChavePix = UUID.randomUUID().toString();
 					 pix.ativarChave(TipoChavePix.ALEATORIO, conteudoChavePix, true);
 					 conta.setPix(pix);
+					 
 				 }
 				
 							 
@@ -99,19 +101,20 @@ public class Principal {
 				 else {
 					 System.out.println("Escolha inválida");	
 					 
-				 }									
+				 }	
+				 System.out.println("Chave cadastrada com sucesso\n Tipo de chave: " + pix.getTipoChave() + " Conteudo chave: " + pix.getConteudoChave());
 		}
 		
 		else if (op.equals("2")) {// trasnfere via pix
 			System.out.println("qual o valor a transferir: ");
-			Double valorTransf = sc.nextDouble();
+			Double valorTransf = Double.parseDouble(sc.nextLine());
 			if (conta.getSaldo() >= valorTransf) {
 				System.out.print("Digite a chave do destinatário: ");
 				String chave = sc.nextLine();
 				if (conta1.getPix().getConteudoChave().equals(chave)) {
 					conta.setSaldo(conta.getSaldo() - valorTransf);
 					conta1.setSaldo(conta1.getSaldo() + valorTransf);
-
+					System.out.println("\nTranferênvia via pix para "+ conta1.getCliente().getNome()+ " realizada com sucesso\n  ");
 			}
 			else {
 				System.out.println("Chave pix não encontrada ");
@@ -188,7 +191,8 @@ public class Principal {
 	 System.out.println("Digite oestado: ");
 	 String estado = sc.nextLine();
 	 
-	 System.out.println("Digite o tipo da conta: ");
+	 System.out.println("1-Conta Corrente\n2-Conta Poupança\n");
+	 System.out.print("Digite o tipo da conta : ");
 	 int escolhaConta= sc.nextInt();
 	 
 	 if(escolhaConta == 1){
@@ -204,6 +208,10 @@ public class Principal {
 	  conta = contaBo.cadastrarConta(cliente, tipoConta);
 	  conta1 = ContaBo.criarContaEstatica();
 //	  
-	 System.out.println("Cliente cadastrado com sucesso ");
+	 System.out.println("\nCliente cadastrado com sucesso\n"
+	 		+ "Nome do cliente:  "+ conta.getCliente().getNome()+"\n"
+	 				+ "Número conta: "+ conta.getNumConta()+"\n"
+	 						+ "Tipo de conta: "+ conta.getTipoConta());
+	 
 	}
 }

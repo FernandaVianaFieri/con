@@ -1,13 +1,17 @@
 	package br.com.projetonextentregar.bean;
-	
-	public class Conta {
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class Conta {
 	
 	protected String numConta = "1573-9";
 	protected double saldo;
 	protected Cliente  cliente = new Cliente();
 	private TipoConta tipoConta;
 	private Pix pix;
-	private Cartao cartao ;
+	private CartaoDebito cartaoDebito ;
+	private String data;
 	private CartaoCredito cartaoCredito;
 			
 
@@ -16,6 +20,7 @@
 		this.saldo = saldo;
 		this.cliente = cliente;
 		this.tipoConta = tipoConta;
+		this.data = dataAtual();
 	}
 
 	public String getNumConta() {
@@ -68,6 +73,14 @@
 
 	public CartaoCredito getCartaoCredito() {
 		return cartaoCredito;
+			
+	}
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
 	}
 
 	public void setCartaoCredito(CartaoCredito cartaoCredito) {
@@ -75,5 +88,8 @@
 	}
 	
 
-
+	public static String dataAtual() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		return sdf.format(Calendar.getInstance().getTime());
+		}
 }

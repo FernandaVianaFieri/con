@@ -1,5 +1,7 @@
 package br.com.projetonextentregar.bo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -46,6 +48,8 @@ public class ContaBo {
 		conta.setSaldo(conta.getSaldo() + valor);
 
 		atualizarTipo(conta);
+		taxaRendimento(conta);// taxando conta corrente e/ou rendendo conta poupança
+		
 
 	}
 
@@ -74,7 +78,7 @@ public class ContaBo {
 		Cliente cliente = new Cliente();
 		cliente.setNome("Fernanda");
 		cliente.setCpf("35957435985");
-		cliente.setDataNascimento( "12/02/1989");
+		cliente.setDataNascimento("12/02/1989");
 		cliente.setTipocliente(TipoCliente.PREMIUM);
 		cliente.setEndereco(endereco);
 		Conta conta = new Conta("1573-9", 0.0, cliente, TipoConta.CORRENTE);
@@ -84,32 +88,58 @@ public class ContaBo {
 		conta.setCliente(cliente);
 		return conta;
 	}
-	
+
 	public void cadastraPix(TipoChavePix tipoChavePix, Conta conta) {
 		conta.getPix().setTipoChave(tipoChavePix);
-		
-		String dado = null;
-		
-		if (tipoChavePix.equals(TipoChavePix.CPF)) {
-			 dado = conta.getCliente().getCpf();
-			
-		}
-		else  if (tipoChavePix.equals(TipoChavePix.EMAIL)) {
-			 dado = conta.getCliente().getEmail();
-			
-		}
-		else if (tipoChavePix.equals(TipoChavePix.TELEFONE)) {
-			 dado = conta.getCliente().getTelefone();
-			
-		}
-		else if (tipoChavePix.equals(TipoChavePix.ALEATORIO)) {
-			 dado = UUID.randomUUID().toString();
-								
-			
-		}
-		
-	}
-		
-}
 
- 
+		String dado = null;
+
+		if (tipoChavePix.equals(TipoChavePix.CPF)) {
+			dado = conta.getCliente().getCpf();
+
+		} else if (tipoChavePix.equals(TipoChavePix.EMAIL)) {
+			dado = conta.getCliente().getEmail();
+
+		} else if (tipoChavePix.equals(TipoChavePix.TELEFONE)) {
+			dado = conta.getCliente().getTelefone();
+
+		} else if (tipoChavePix.equals(TipoChavePix.ALEATORIO)) {
+			dado = UUID.randomUUID().toString();
+
+		}
+
+	}
+
+	public void taxaRendimento(Conta conta) {
+		if (conta.getData().equals(Conta.dataAtual())) {
+			if (conta.getTipoConta().name().equals("CORRENTE")) {
+				
+				double valor = conta.getSaldo();
+				double taxa = valor * (0.45 / 100);
+				valor -= taxa;
+				System.out.println("Taxando: " + (taxa));
+				conta.setSaldo(valor);
+				conta.setData(getDateAdd1Month());
+				System.out.println("Próximo mês de cobrança: " + conta.getData());
+				
+			} else {
+				double valor = conta.getSaldo();
+				double taxa = valor * (0.03 / 100);
+				valor += taxa;
+				System.out.println("Rendendo: " + (taxa));
+				conta.setSaldo(valor);
+				conta.setData(getDateAdd1Month());
+				System.out.println("Próximo mês de cobrança: " + conta.getData());
+			}
+		}
+		
+
+	}
+
+	public static String getDateAdd1Month() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, 1);
+		return sdf.format(calendar.getTime());
+	}
+}
