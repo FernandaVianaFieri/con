@@ -2,9 +2,12 @@ package br.com.projetonextentregar.bean;
 
 public class Apolice {
 
-	String id;
-	double valorApolice;
-	String condicoes;
+	private String id;
+	private double valorApolice;
+	private String condicoes;
+	private Seguro seguro;
+	
+	
 	public String getId() {
 		return id;
 	}
@@ -22,6 +25,12 @@ public class Apolice {
 	}
 	public void setCondicoes(String condicoes) {
 		this.condicoes = condicoes;
+	}
+	public Seguro getSeguro() {
+		return seguro;
+	}
+	public void setSeguro(Seguro seguro) {
+		this.seguro = seguro;
 	}
 	
 	

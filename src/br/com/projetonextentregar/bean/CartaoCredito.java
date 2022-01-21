@@ -1,47 +1,45 @@
 package br.com.projetonextentregar.bean;
 
-public class CartaoCredito {
+import java.util.ArrayList;
+import java.util.List;
 
-	String id;
-	double limite;
-	double valorFatura;
-	
-	
-	public CartaoCredito(String id, double limite, double valorFatura) {
-    	this.id = id;
+public class CartaoCredito extends Cartao {
+
+	private double limite;
+	private Apolice apolice;
+
+	private List<Compra> listCompra;
+
+	public CartaoCredito(String bandeira, String senha, double limite) {
+		super(bandeira, senha);
 		this.limite = limite;
-		this.valorFatura = valorFatura;
+		this.listCompra = new ArrayList<Compra>();
 	}
-
-
-	public String getId() {
-		return id;
-	}
-
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 
 	public double getLimite() {
 		return limite;
 	}
 
-
 	public void setLimite(double limite) {
 		this.limite = limite;
 	}
 
-
-	public double getValorFatura() {
-		return valorFatura;
+	public List<Compra> getListCompra() {
+		return listCompra;
 	}
 
-
-	public void setValorFatura(double valorFatura) {
-		this.valorFatura = valorFatura;
+	public void setListCompra(List<Compra> listCompra) {
+		this.listCompra = listCompra;
 	}
+
+	public Apolice getApolice() {
+		return apolice;
+	}
+
+	public void setApolice(Apolice apolice) {
+		this.apolice = apolice;
+	}
+
 	
 	
 }

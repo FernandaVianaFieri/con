@@ -1,20 +1,22 @@
 package br.com.projetonextentregar.bean;
 
+import java.util.UUID;
+
 public class Cartao {
 
-	String numero;
-	String bandeira;
-	String senha;
-	boolean ativo;
+	private static String numero;
+	private String bandeira;
+	private String senha;
+	private boolean ativo;
 	
-	public Cartao(String numero, String bandeira, String senha, boolean ativo) {
-		this.numero = numero;
+	public Cartao( String bandeira, String senha) {
+		this.numero = UUID.randomUUID().toString();
 		this.bandeira = bandeira;
 		this.senha = senha;
-		this.ativo = ativo;
+		this.ativo = true;
 	}
 
-	public String getNumero() {
+	public    String getNumero() {
 		return numero;
 	}
 

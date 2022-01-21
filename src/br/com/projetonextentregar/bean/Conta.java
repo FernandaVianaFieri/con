@@ -63,12 +63,13 @@ public class Conta {
 		this.pix = pix;
 	}
 
-	public Cartao getCartao() {
-		return cartao;
+
+	public CartaoDebito getCartaoDebito() {
+		return cartaoDebito;
 	}
 
-	public void setCartao(Cartao cartao) {
-		this.cartao = cartao;
+	public void setCartaoDebito(CartaoDebito cartaoDebito) {
+		this.cartaoDebito = cartaoDebito;
 	}
 
 	public CartaoCredito getCartaoCredito() {

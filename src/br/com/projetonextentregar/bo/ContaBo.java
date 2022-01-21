@@ -1,5 +1,6 @@
 package br.com.projetonextentregar.bo;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +17,8 @@ import br.com.projetonextentregar.bean.TipoConta;
 public class ContaBo {
 
 	private static int contasCriadas = 1;
+	static Date data = new Date();
+	
 
 	// auto incremento, gera um novo número
 	private String novaConta() {
@@ -78,7 +81,18 @@ public class ContaBo {
 		Cliente cliente = new Cliente();
 		cliente.setNome("Fernanda");
 		cliente.setCpf("35957435985");
-		cliente.setDataNascimento("12/02/1989");
+		
+		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+					
+		data = formato.parse("12/02/1989");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		cliente.setDataNascimento(data);
 		cliente.setTipocliente(TipoCliente.PREMIUM);
 		cliente.setEndereco(endereco);
 		Conta conta = new Conta("1573-9", 0.0, cliente, TipoConta.CORRENTE);
@@ -142,4 +156,6 @@ public class ContaBo {
 		calendar.add(Calendar.MONTH, 1);
 		return sdf.format(calendar.getTime());
 	}
+
+	
 }

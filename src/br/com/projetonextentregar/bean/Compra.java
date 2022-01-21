@@ -1,10 +1,12 @@
 package br.com.projetonextentregar.bean;
 
-public class CompraCartaoCred {
+public class Compra {
 
 	String id;
-	double compra;
+	double valorCompra;
 	String desconto;
+	
+	
 	public String getId() {
 		return id;
 	}
@@ -12,10 +14,10 @@ public class CompraCartaoCred {
 		this.id = id;
 	}
 	public double getCompra() {
-		return compra;
+		return valorCompra;
 	}
 	public void setCompra(double compra) {
-		this.compra = compra;
+		this.valorCompra = compra;
 	}
 	public String getDesconto() {
 		return desconto;

@@ -10,7 +10,7 @@
 		private String email;
 		private TipoCliente tipocliente;
 		private TipoConta tipoConta;		
-		private String dataNascimento;		
+		private Date dataNascimento;		
 		private Endereco endereco;
 		
 
@@ -44,12 +44,12 @@
 		}
 
 
-		public String getDataNascimento() {
+		public Date getDataNascimento() {
 			return dataNascimento;
 		}
 
 
-		public void setDataNascimento(String dataNascimento) {
+		public void setDataNascimento(Date dataNascimento) {
 			this.dataNascimento = dataNascimento;
 		}
 

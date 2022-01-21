@@ -1,9 +1,14 @@
 package br.com.projetonextentregar.bean;
 
 	public class Seguro {
-	String id;
-	String nome;
-	String regras;
+	private String id;
+	private String nome;
+	private String regras ;
+	private Double valor;
+	Apolice apolice;
+	
+
+	
 	public String getId() {
 		return id;
 	}
@@ -19,8 +24,20 @@ package br.com.projetonextentregar.bean;
 	public String getRegras() {
 		return regras;
 	}
-	public void setRegras(String regras) {
+	public void setRegras(String  regras) {
 		this.regras = regras;
+	}
+	public Apolice getApolice() {
+		return apolice;
+	}
+	public void setApolice(Apolice apolice) {
+		this.apolice = apolice;
+	}
+	public Double getValor() {
+		return valor;
+	}
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 	
 	
