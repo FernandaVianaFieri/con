@@ -7,6 +7,7 @@ import java.util.*;
 
 import br.com.projetonextentregar.bo.ApoliceBo;
 import br.com.projetonextentregar.bo.CartaoBo;
+import br.com.projetonextentregar.bo.CartaoCredBo;
 import br.com.projetonextentregar.bo.ClienteBo;
 import br.com.projetonextentregar.bo.ContaBo;
 import br.com.projetonextentregar.bo.SeguroBo;
@@ -24,7 +25,9 @@ public class Principal {
 	static SeguroBo seguroBo = new SeguroBo();
 	static ApoliceBo apoliceBo = new ApoliceBo();
 	static Apolice apolice = new Apolice();
-	
+	static CartaoCredBo cartaoCredBo = new CartaoCredBo();
+	static CartaoCredito cartaoCredito;
+	static CartaoDebito cartaoDebito;
 
 	static Conta conta = null;
 	static Conta conta1 = null;
@@ -70,9 +73,10 @@ public class Principal {
 		}
 
 	}
+
 	// menu bandeiras do cartão
 	private static void exibeCartao() {
-		System.out.print("Deseja ter um cartão:  1- Sim  2-Não ");
+		System.out.print("Selecione a opção  1- Cadastrar Cartão  2-Consultar Cartão ");
 		String resposta = sc.nextLine();
 		if (resposta.equals("1")) {
 			System.out.print("Selecione a bandeira do cartão \n1- Master  \n2-Visa  \n3-Cielo");
@@ -88,10 +92,10 @@ public class Principal {
 				bandeira = "Cielo";
 
 			}
-            // Senha
+			// Senha
 			System.out.print("Cadastre seua senha com 4 digitos\n");
 			String senha = sc.nextLine();
-            
+
 			// Escolher cartão
 			System.out.println("1-Cartão de Crédito\n2-Cartão de Débito\n");
 			System.out.print("Digite o tipo de cartão :\n ");
@@ -100,49 +104,13 @@ public class Principal {
 
 			if (escolhaCartao.equals("1")) {
 				System.out.println("Cartão de Crédito");
-				
+
 				// String bandeira, String senha, double limite
-				CartaoCredito cartaoCredito = new CartaoCredito(bandeira, senha,cartaoBo.retornaLimite(conta.getCliente()));
-				conta.setCartaoCredito(cartaoCredito);
-								
-				System.out.println("Deseja contratar um seguro? 1- Seguro de Morte\n2- Seguro Invalidez\n3- Seguro Desemprego\n4 - Não desjo contratar seguro");
-				String contratarSeguro = sc.nextLine();
-				HashMap<TipoSeguro, Seguro> seguros = new HashMap();
-				seguros = seguroBo.popularSeguros();
-				Seguro seguro = new Seguro();
 				
-				if (contratarSeguro.equals("1")) {
-					seguro = seguros.get(TipoSeguro.MORTE);
-					
-					
-				}
+					 cartaoCredito = new CartaoCredito(bandeira, senha,
+					cartaoBo.retornaLimite(conta.getCliente()));
+					conta.setCartaoCredito(cartaoCredito);
 				
-				else if (contratarSeguro.equals("2")) {
-					seguro = seguros.get(TipoSeguro.INVALIDEZ);
-					
-										
-				}
-				
-				else if (contratarSeguro.equals("3")) {
-					seguro = seguros.get(TipoSeguro.DESEMPREGO);
-					
-				}			
-				
-				System.out.println("Detalhes do seguro: ");
-				System.out.println("Valor: R$ " + seguro.getValor());
-				System.out.println("Regras:  " + seguro.getRegras());
-				
-				// opção de fechar o seguro
-				System.out.println("Deseja realmente contratar o seguro? 1-Sim \n2-Não");
-				String fecharSeguro = sc.nextLine();
-				
-				if (fecharSeguro.equals("1")) {
-					apolice = apoliceBo.salvarApolice(seguro);
-					conta.getCartaoCredito().setApolice(apolice);
-				}
-				
-				System.out.println("Número do Cartão: " + cartaoCredito.getNumero() + "\nTipo de cartão: "
-						+ escolhaCartao + "\nBandeira: " + bandeira + "\nLimite: " + cartaoCredito.getLimite() + "\n");
 
 			} else {
 
@@ -151,7 +119,7 @@ public class Principal {
 				Double limite = sc.nextDouble();
 
 				// String bandeira, String senha, double limiteS
-				CartaoDebito cartaoDebito = new CartaoDebito(bandeira, senha, limite);
+				 cartaoDebito = new CartaoDebito(bandeira, senha, limite);
 				conta.setCartaoDebito(cartaoDebito);
 				System.out
 						.println("Número do Cartão: " + cartaoDebito.getNumero() + "\nTipo de cartão: " + escolhaCartao
@@ -159,12 +127,16 @@ public class Principal {
 			}
 
 		}
+		else {
+			menuCartao();
+		}
 
 	}
 
 	public static void operacaoPrincipal() {
 
 	}
+
 	// menu pix
 	private static void exibePix() {
 		System.out.println("1-Cadastrar chave\n2-Transferir via Pix");
@@ -215,7 +187,7 @@ public class Principal {
 			if (conta.getSaldo() >= valorTransf) {
 				System.out.print("Digite a chave do destinatário: ");
 				String chave = sc.nextLine();
-				
+
 				if (conta1.getPix().getConteudoChave().equals(chave)) {
 					conta.setSaldo(conta.getSaldo() - valorTransf);
 					conta1.setSaldo(conta1.getSaldo() + valorTransf);
@@ -233,7 +205,7 @@ public class Principal {
 
 	private static void consultaSaldo() {
 		System.out.println("Seu saldo é : " + contaBo.consultaSaldo(conta));
-		System.out.println("Tipo de cliente: " + conta1.getCliente().getTipocliente() );
+		System.out.println("Tipo de cliente: " + conta1.getCliente().getTipocliente());
 		System.out.println("\n ");
 	}
 
@@ -258,21 +230,20 @@ public class Principal {
 		System.out.println("Digite seu nome para cadastro: ");
 		nome = sc.nextLine();
 
-		//converter data de String para data
-		
+		// converter data de String para data
+
 		System.out.println("Digite sua data de nascimento: ");
 		String dataNascimento = sc.nextLine();
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		try {
-		
+
 			data = formato.parse(dataNascimento);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
+
 		}
-		
-		
+
 		System.out.println("Digite seu e-mail:  ");
 		String email = sc.nextLine();
 
@@ -329,9 +300,80 @@ public class Principal {
 		conta1 = ContaBo.criarContaEstatica();
 //	  
 		System.out.println("\nCliente cadastrado com sucesso\n" + "Nome do cliente:  " + conta.getCliente().getNome()
-				+ "\n" + "Número conta: " + conta.getNumConta() + "\n" + "Tipo de conta: " + conta.getTipoConta() );
+				+ "\n" + "Número conta: " + conta.getNumConta() + "\n" + "Tipo de conta: " + conta.getTipoConta());
 
 	}
 
-	
+public static void menuCartao () {
+
+	int opCompra;
+	System.out.println("1-Seguro\n2-Compras\n3-Informações do cartão\n4-Exibir fatura");
+	opCompra = sc.nextInt();
+
+	if (opCompra == 1) {
+		System.out.println(
+				"Deseja contratar um seguro? 1- Seguro de Morte\n2- Seguro Invalidez\n3- Seguro Desemprego\n4 - Não desjo contratar seguro");
+		String contratarSeguro = sc.nextLine();
+		HashMap<TipoSeguro, Seguro> seguros = new HashMap();
+		seguros = seguroBo.popularSeguros();
+		Seguro seguro = new Seguro();
+
+		if (contratarSeguro.equals("1")) {
+			seguro = seguros.get(TipoSeguro.MORTE);
+
+		}
+
+		else if (contratarSeguro.equals("2")) {
+			seguro = seguros.get(TipoSeguro.INVALIDEZ);
+
+		}
+
+		else if (contratarSeguro.equals("3")) {
+			seguro = seguros.get(TipoSeguro.DESEMPREGO);
+
+		}
+
+		System.out.println("Detalhes do seguro: ");
+		System.out.println("Valor: R$ " + seguro.getValor());
+		System.out.println("Regras:  " + seguro.getRegras());
+
+		// opção de fechar o seguro
+		System.out.println("Deseja realmente contratar o seguro? 1-Sim \n2-Não");
+		String fecharSeguro = sc.nextLine();
+
+		if (fecharSeguro.equals("1")) {
+			apolice = apoliceBo.salvarApolice(seguro);
+			conta.getCartaoCredito().setApolice(apolice);
+			System.out.println("Datas: " + apolice.getDataCarencia() + apolice.getDataAssinatura());
+
+		}
+	} else if (opCompra == 2) {
+		System.out.println("Digite o valor da compra: ");
+		double valor = sc.nextDouble();
+		boolean retorno = cartaoCredBo.compraCredito(valor, conta);
+		
+		if (retorno) {
+			System.out.println("Compra efetuada com sucesso");
+		}
+		else {
+			System.out.println("Limite do cartão atingido ");
+		}
+		
+		
+	} else if (opCompra == 3) {
+		System.out.println(
+				"Número do Cartão: " + conta.getCartaoCredito().getNumero() + "Bandeira: " + conta.getCartaoCredito().getBandeira() + "\nLimite: " +conta.getCartaoCredito().getLimite());
+	}
+
+	else if (opCompra == 4){
+		SimpleDateFormat sdfComHora = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+		List <Compra> listaCompra = conta.getCartaoCredito().getListCompra();
+		for (Compra compras: listaCompra) {
+			String dataCompra = sdfComHora.format(compras.getDataCompra());
+			double valorCompra = compras.getValorCompra();
+			System.out.println("Compra realizada no dia: " + dataCompra + "No valor de : "+ valorCompra);
+		}
+		
+	}
+}
 }

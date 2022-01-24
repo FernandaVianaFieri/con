@@ -5,6 +5,7 @@ package br.com.projetonextentregar.bean;
 	private String nome;
 	private String regras ;
 	private Double valor;
+	
 	Apolice apolice;
 	
 

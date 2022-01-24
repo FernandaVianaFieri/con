@@ -1,11 +1,21 @@
 package br.com.projetonextentregar.bean;
 
+import java.util.*;
+
 public class Compra {
 
-	String id;
-	double valorCompra;
-	String desconto;
+	private String id;
+	 private double valorCompra;
+		Date dataCompra;
 	
+		
+	
+	public Compra (double valorCompra, Date dataCompra) {
+		this.valorCompra = valorCompra;
+		this.id = UUID.randomUUID().toString();
+		this.dataCompra = dataCompra;
+		
+	}
 	
 	public String getId() {
 		return id;
@@ -19,15 +29,22 @@ public class Compra {
 	public void setCompra(double compra) {
 		this.valorCompra = compra;
 	}
-	public String getDesconto() {
-		return desconto;
+
+	public Date getDataCompra() {
+		return dataCompra;
 	}
-	public void setDesconto(String desconto) {
-		this.desconto = desconto;
+
+	public void setDataCompra(Date dataCompra) {
+		this.dataCompra = dataCompra;
 	}
-	
-	
-	
+
+	public double getValorCompra() {
+		return valorCompra;
+	}
+
+	public void setValorCompra(double valorCompra) {
+		this.valorCompra = valorCompra;
+	}
 	
 	
 }

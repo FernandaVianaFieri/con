@@ -1,11 +1,16 @@
 package br.com.projetonextentregar.bean;
 
+import java.util.Date;
+
 public class Apolice {
 
 	private String id;
 	private double valorApolice;
 	private String condicoes;
 	private Seguro seguro;
+	private Date dataAssinatura;
+	private Date dataCarencia;
+	
 	
 	
 	public String getId() {
@@ -31,6 +36,18 @@ public class Apolice {
 	}
 	public void setSeguro(Seguro seguro) {
 		this.seguro = seguro;
+	}
+	public Date getDataAssinatura() {
+		return dataAssinatura;
+	}
+	public void setDataAssinatura(Date dataAssinatura) {
+		this.dataAssinatura = dataAssinatura;
+	}
+	public Date getDataCarencia() {
+		return dataCarencia;
+	}
+	public void setDataCarencia(Date dataCarencia) {
+		this.dataCarencia = dataCarencia;
 	}
 	
 	

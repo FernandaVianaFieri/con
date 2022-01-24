@@ -7,12 +7,14 @@ public class CartaoCredito extends Cartao {
 
 	private double limite;
 	private Apolice apolice;
+	private double valorFatura;
 
 	private List<Compra> listCompra;
 
 	public CartaoCredito(String bandeira, String senha, double limite) {
 		super(bandeira, senha);
 		this.limite = limite;
+		this.valorFatura = 0;
 		this.listCompra = new ArrayList<Compra>();
 	}
 
@@ -38,6 +40,14 @@ public class CartaoCredito extends Cartao {
 
 	public void setApolice(Apolice apolice) {
 		this.apolice = apolice;
+	}
+
+	public double getValorFatura() {
+		return valorFatura;
+	}
+
+	public void setValorFatura(double valorFatura) {
+		this.valorFatura = valorFatura;
 	}
 
 	
